@@ -1,5 +1,5 @@
-import { GamepadOptions, VueGamepad } from '../../src/gamepad';
-import { ButtonNames } from '../../src/buttonMappings';
+import { GamepadOptions, VueGamepad } from '../../gamepad';
+import { ButtonNames } from '../../buttonMappings';
 
 import { App } from 'vue';
 
@@ -15,10 +15,12 @@ export function installVueGamepad(Vue: App, options = {}) {
   const DefaultOptions: GamepadOptions = {
     analogThreshold: 0.5,
     buttonNames: ButtonNames,
-    buttonRepeatTimeout: 500,
+    buttonRepeatTimeout: 200,
     buttonInitialTimeout: 200,
     injectClasses: true,
   };
+
+  const validModifiers = ['repeat', 'released'];
 
   const vueGamepad = new VueGamepad({ ...DefaultOptions, ...options });
 

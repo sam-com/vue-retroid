@@ -131,7 +131,8 @@ export class VueGamepad {
         if (holding) {
           this.holdings.set(name, now);
         }
-        this.options.injectClasses && event.vnode.el.classList.add('active');
+        this.options.injectClasses &&
+          event.vnode.el.classList.add('v-gamepad-active');
         event.callback();
       }
     }
@@ -143,7 +144,8 @@ export class VueGamepad {
     const events = this.events['released'].get(name);
     if (events && events.length > 0) {
       const event = events[events.length - 1];
-      this.options.injectClasses && event.vnode.el.classList.remove('active');
+      this.options.injectClasses &&
+        event.vnode.el.classList.remove('v-gamepad-active');
       event.callback();
     }
   }
