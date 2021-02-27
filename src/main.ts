@@ -1,10 +1,12 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import './index.css';
+import router from './router';
 import { installVueGamepad } from './api/gamepad/install';
+
+import './styles.css';
 
 const app = createApp(App);
 
 installVueGamepad(app);
 
-app.mount('#app');
+app.use(router).mount('#app');

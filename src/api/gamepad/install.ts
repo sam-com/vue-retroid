@@ -1,5 +1,5 @@
-import { GamepadOptions, VueGamepad } from '../../gamepad';
-import { ButtonNames } from '../../buttonMappings';
+import { GamepadOptions, VueGamepad } from './gamepad';
+import { ButtonNames } from './buttonMappings';
 
 import { App } from 'vue';
 
