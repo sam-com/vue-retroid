@@ -9,25 +9,28 @@ export enum NotificationTypes {
 }
 
 export type Notification = {
+	uuid: string;
 	message: string;
 	type: NotificationTypes;
 };
 
-type Options = { ttl?: number; type?: NotificationTypes}
+type Options = { ttl?: number; type?: NotificationTypes };
 
-const state: { notifications: Map<string, Notification> } = reactive({
-	notifications: new Map<string, Notification>(),
+const state = reactive({
+	notifications: new Array<Notification>(),
 });
 
 export async function setNotification(
 	message: string,
-	{ttl=5, type=NotificationTypes.message}: Options = {}
+	{ ttl = 5, type = NotificationTypes.message }: Options = {},
 ) {
 	const uuid = uuidv4();
-	state.notifications.set(uuid, { message, type});
+	state.notifications.unshift({ uuid, message, type });
 
 	setTimeout(() => {
-		state.notifications.delete(uuid);
+		state.notifications = state.notifications.filter(
+			(notification) => notification.uuid !== uuid,
+		);
 	}, ttl * 1000);
 }
 

@@ -4,12 +4,12 @@ module.exports = {
 	theme: {
 		extend: {
 			animation: {
-				'toast-fade-in': 'fade-in 0.5s',
+				'toast-fade-right-to-left': 'fade-right-to-left 0.5s',
 			},
 			keyframes: {
-				'fade-in': {
-					'0%': { transform: 'translateY(50px)', opacity: 0 },
-					'100%': { transform: 'translateY(0)', opacity: 1 },
+				'fade-right-to-left': {
+					'0%': { transform: 'translateX(100%)', opacity: 0 },
+					'100%': { transform: 'translateX(0)', opacity: 1 },
 				},
 			},
 		},
