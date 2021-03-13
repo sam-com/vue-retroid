@@ -1,40 +1,36 @@
 <template>
-	<!--	<img alt="Vue logo" src="../assets/logo.png" />-->
-	<!--	<span v-gamepad:button-select="callback">PRESS START</span>-->
-	<Carousel :slides="slides" />
+	<div
+		class="flex items-center flex-col justify-center w-screen h-screen bg-gray-800"
+	>
+		<img class="max-w-xs" alt="Retroid logo" src="../assets/retroid.png" />
+		<span class="text-white" v-gamepad:button-select="callback"
+			>PRESS START</span
+		>
+	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import router from '../router';
-import PlatformsList from '../components/PlatformsList.vue';
-import Carousel from '../components/Carousel/Carousel.vue';
+import ConsolesList from './ConsolesList.vue';
+
+import useSound from 'vue-use-sound';
+import homeSfx from "../sounds/Home.wav";
 
 export default defineComponent({
 	name: 'Home',
 	components: {
-		Carousel,
-		PlatformsList,
+		ConsolesList,
 	},
 	setup: () => {
+		const [play] = useSound(homeSfx)
+
 		const callback = () => {
-			router.push('/platforms');
+			play();
+			router.push('/consoles');
 		};
 
-		const slides = [
-			{ src: '/src/assets/slide1.png' },
-			{ src: '/src/assets/slide2.png' },
-			{ src: '/src/assets/slide3.png' },
-			// { src: '/src/assets/slide4.jpeg' },
-			{ src: '/src/assets/slide1.png' },
-			{ src: '/src/assets/slide2.png' },
-			{ src: '/src/assets/slide3.png' },
-			{ src: '/src/assets/slide1.png' },
-			{ src: '/src/assets/slide2.png' },
-			{ src: '/src/assets/slide3.png' },
-		];
-
-		return { callback, slides };
+		return { callback };
 	},
 });
 </script>

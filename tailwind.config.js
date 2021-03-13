@@ -2,6 +2,9 @@ module.exports = {
 	purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
 	darkMode: false, // or 'media' or 'class'
 	theme: {
+		maxWidth: {
+			'3/4': '75%',
+		},
 		extend: {
 			animation: {
 				'toast-fade-right-to-left': 'fade-right-to-left 0.5s',

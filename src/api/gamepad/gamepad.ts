@@ -2,7 +2,7 @@ import { NotificationTypes } from './../notification/nofitications';
 import { getAxisNameFromValue, getAxisNames } from './buttonMappings';
 import { setNotification } from '../notification/nofitications';
 
-const gamepads: Map<number, Gamepad> = new Map();
+// const gamepads: Map<number, Gamepad> = new Map();
 
 export type GamepadOptions = {
 	buttonInitialTimeout: number;

@@ -10,11 +10,17 @@
     "esModuleInterop": true,
     "lib": [
       "esnext",
-      "dom"
+      "dom",
+      "dom.iterable"
     ],
     "types": [
       "vite/client"
-    ]
+    ],
+    "paths": {
+      "@*": [
+        "src/*"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts",
