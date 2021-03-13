@@ -1,6 +1,6 @@
 <template>
-	<div class='relative overflow-hidden' v-gamepad:button-dpad-right='scrollRight'
-			 v-gamepad:button-dpad-left='scrollLeft'>
+	<div class='relative overflow-hidden' v-gamepad:button-dpad-right.repeat='handleScrollRight'
+			 v-gamepad:button-dpad-left.repeat='handleScrollLeft'>
 		<div ref='carouselContainerInner' class='carousel-container-inner'>
 			<div v-for='(element, index) in elements'
 					 class='text-white text-4xl flex items-center justify-center h-80 w-80 rounded-2xl bg-blue-400 p-4'
@@ -16,6 +16,9 @@
 import { defineComponent, PropType, ref } from 'vue';
 import router from '../router';
 import { usePosition } from '../hooks/usePosition';
+
+import useSound from 'vue-use-sound';
+import tickSfx from '../sounds/Nock.wav';
 
 interface Console {
 	tag: string
@@ -35,15 +38,35 @@ export default defineComponent({
 		const {
 			scrollLeft,
 			scrollRight,
+			hasItemsOnRight,
+			hasItemsOnLeft,
 			currentIndex,
 		} = usePosition(carouselContainerInner);
+
+		const [play] = useSound(tickSfx);
+
+		const handleScrollRight = () => {
+			if (!hasItemsOnRight.value) {
+				return;
+			}
+			play();
+			scrollRight();
+		};
+
+		const handleScrollLeft = () => {
+			if (!hasItemsOnLeft.value) {
+				return;
+			}
+			play();
+			scrollLeft();
+		};
 
 		return {
 			elements,
 			goBack,
 			carouselContainerInner,
-			scrollLeft,
-			scrollRight,
+			handleScrollLeft,
+			handleScrollRight,
 			currentIndex,
 		};
 	},
@@ -54,7 +77,7 @@ export default defineComponent({
 .carousel-container-inner
 	display: grid
 	grid-auto-flow: column
-	grid-gap: 2rem
+	grid-gap: 6rem
 	overflow-x: scroll
 	scroll-snap-type: x mandatory
 	-ms-overflow-style: none
@@ -69,5 +92,5 @@ export default defineComponent({
 		margin-left: 1rem
 
 		&.active
-			border: 2px solid white
+			border: 4px solid white
 </style>

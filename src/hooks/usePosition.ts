@@ -80,6 +80,8 @@ export function usePosition(containerRef: Ref<HTMLElement>) {
 	return {
 		scrollRight,
 		scrollLeft,
+		hasItemsOnLeft,
+		hasItemsOnRight,
 		currentIndex,
 	};
 }

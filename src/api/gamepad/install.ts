@@ -15,7 +15,7 @@ export function installVueGamepad(Vue: App, options = {}) {
 	const DefaultOptions: GamepadOptions = {
 		analogThreshold: 0.5,
 		buttonNames: ButtonNames,
-		buttonRepeatTimeout: 400,
+		buttonRepeatTimeout: 200,
 		buttonInitialTimeout: 200,
 		injectClasses: true,
 	};
