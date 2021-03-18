@@ -1,18 +1,13 @@
 import { ref, Ref, watchEffect } from 'vue';
 
+const activeClass = 'carousel-active';
+
 export function usePosition(containerRef: Ref<HTMLElement>) {
 	const hasItemsOnLeft = ref<boolean>(false);
 	const hasItemsOnRight = ref<boolean>(false);
 	const currentIndex = ref<number>(0);
-	const scrollStartIndex = ref<number>(0);
 	const nextElement = ref<HTMLElement | null>(null);
 	const prevElement = ref<HTMLElement | null>(null);
-
-	function isElementVisible(elementIndex: number) {
-		const rect = containerRef.value.getBoundingClientRect();
-		const childRect = containerRef.value.children[elementIndex].getBoundingClientRect();
-		return rect.left <= childRect.left && rect.right >= childRect.right;
-	}
 
 	function getPrevElement(): HTMLElement | null {
 		const sibling = <HTMLElement>containerRef.value.children[currentIndex.value].previousElementSibling;
@@ -30,14 +25,18 @@ export function usePosition(containerRef: Ref<HTMLElement>) {
 		return null;
 	}
 
-	const scrollToElement = (index: number) => {
+	const scrollToElement = (element: HTMLElement | null) => {
 		const currentNode = containerRef.value;
-		const element = <HTMLElement>currentNode.children[index];
 
 		if (!currentNode || !element) return;
 
-		const newScrollPosition =
-			element.offsetLeft;
+		const newScrollPosition = element.offsetLeft +
+			element.getBoundingClientRect().width / 2 -
+			currentNode.getBoundingClientRect().width / 2;
+
+		const currentElement = currentNode.children[currentIndex.value];
+		currentElement.classList.remove(activeClass);
+		element.classList.add(activeClass);
 
 		currentNode.scroll({
 			left: newScrollPosition,
@@ -52,16 +51,17 @@ export function usePosition(containerRef: Ref<HTMLElement>) {
 		hasItemsOnRight.value = currentIndex.value < containerRef.value.children.length - 1;
 	}, { flush: 'post' });
 
+	watchEffect(() => {
+		containerRef.value.children[currentIndex.value].classList.add(activeClass);
+	}, { flush: 'post' });
+
 	const scrollRight = () => {
 		if (currentIndex.value === containerRef.value.children.length - 1) {
 			return;
 		}
 		const newIndex: number = currentIndex.value + 1;
 
-		if (!isElementVisible(newIndex)) {
-			scrollToElement(scrollStartIndex.value + 1);
-			scrollStartIndex.value += 1;
-		}
+		scrollToElement(getNextElement());
 		currentIndex.value = newIndex;
 	};
 
@@ -70,10 +70,7 @@ export function usePosition(containerRef: Ref<HTMLElement>) {
 			return;
 		}
 		const newIndex: number = currentIndex.value - 1;
-		if (!isElementVisible(newIndex)) {
-			scrollToElement(newIndex);
-			scrollStartIndex.value -= 1;
-		}
+		scrollToElement(getPrevElement());
 		currentIndex.value = newIndex;
 	};
 

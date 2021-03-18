@@ -1,6 +1,6 @@
 <template>
-	<div class='relative overflow-hidden' v-gamepad:button-dpad-right.repeat='handleScrollRight'
-			 v-gamepad:button-dpad-left.repeat='handleScrollLeft'>
+	<div class='relative overflow-hidden' v-gamepad:button-dpad-right='handleScrollRight'
+			 v-gamepad:button-dpad-left='handleScrollLeft'>
 		<div ref='carouselContainerInner' class='carousel-container-inner'>
 			<div v-for='(element, index) in elements'
 					 class='text-white text-4xl flex items-center justify-center h-80 w-80 rounded-2xl bg-blue-400 p-4'
@@ -77,7 +77,7 @@ export default defineComponent({
 .carousel-container-inner
 	display: grid
 	grid-auto-flow: column
-	grid-gap: 6rem
+	grid-gap: 10rem
 	overflow-x: scroll
 	scroll-snap-type: x mandatory
 	-ms-overflow-style: none
@@ -86,11 +86,19 @@ export default defineComponent({
 	&::-webkit-scrollbar
 		display: none
 
-	& > *
-		scroll-snap-align: start
-		flex-shrink: 0
-		margin-left: 1rem
+	&::before
+		content: ''
+		width: 1px
+	&::after
+		content: ''
+		width: 1px
 
-		&.active
-			border: 4px solid white
+	& > *
+		flex-shrink: 0
+		border: 4px solid white
+		opacity: 0.5
+		scroll-snap-align: center
+
+		&.carousel-active
+			opacity: 1
 </style>
