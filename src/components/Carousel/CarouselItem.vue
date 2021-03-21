@@ -1,5 +1,5 @@
 <template>
-	<div class='flex-shrink-0 scroll-snap-align-center'>
+	<div class='flex-shrink-0 scroll-snap-align-center w-min'>
 		<slot />
 	</div>
 </template>

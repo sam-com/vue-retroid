@@ -1,5 +1,5 @@
 <template>
-	<div class='relative overflow-hidden' v-gamepad:button-dpad-right='handleScrollRight'
+	<div class='relative overflow-hidden flex justify-center' v-gamepad:button-dpad-right='handleScrollRight'
 			 v-gamepad:button-dpad-left='handleScrollLeft'>
 		<div ref='carouselContainerInner' class='grid grid-flow-col gap-8 overflow-x-auto scroll-snap-x scrollbar-none'>
 			<slot :active='currentIndex'></slot>
