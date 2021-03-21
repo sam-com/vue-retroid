@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 import { installVueGamepad } from './api/gamepad/install';
 
-import './index.css';
+import './styles.css';
 
 const app = createApp(App);
 

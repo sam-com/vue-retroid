@@ -1,7 +1,5 @@
 import { ref, Ref, watchEffect } from 'vue';
 
-const activeClass = 'carousel-active';
-
 export function usePosition(containerRef: Ref<HTMLElement>) {
 	const hasItemsOnLeft = ref<boolean>(false);
 	const hasItemsOnRight = ref<boolean>(false);
@@ -34,10 +32,6 @@ export function usePosition(containerRef: Ref<HTMLElement>) {
 			element.getBoundingClientRect().width / 2 -
 			currentNode.getBoundingClientRect().width / 2;
 
-		const currentElement = currentNode.children[currentIndex.value];
-		currentElement.classList.remove(activeClass);
-		element.classList.add(activeClass);
-
 		currentNode.scroll({
 			left: newScrollPosition,
 			behavior: 'smooth',
@@ -49,10 +43,6 @@ export function usePosition(containerRef: Ref<HTMLElement>) {
 		nextElement.value = getNextElement();
 		hasItemsOnLeft.value = currentIndex.value > 0;
 		hasItemsOnRight.value = currentIndex.value < containerRef.value.children.length - 1;
-	}, { flush: 'post' });
-
-	watchEffect(() => {
-		containerRef.value.children[currentIndex.value].classList.add(activeClass);
 	}, { flush: 'post' });
 
 	const scrollRight = () => {
